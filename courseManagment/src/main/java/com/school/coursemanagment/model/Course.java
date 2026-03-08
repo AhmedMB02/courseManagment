@@ -1,11 +1,18 @@
 package com.school.coursemanagment.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +29,7 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "idUser")
     private User user;
+
+    @OneToMany(mappedBy = "course")
+    private List<Enrollment> enrollments;
 }

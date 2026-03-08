@@ -60,6 +60,13 @@
             <artifactId>spring-boot-starter-webservices-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <!-- Optional: Spring Boot parent POM manages the version, so this can be omitted -->
+        </dependency>
+
     </dependencies>
 
     <build>
