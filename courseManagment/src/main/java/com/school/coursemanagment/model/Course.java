@@ -1,11 +1,6 @@
 package com.school.coursemanagment.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
-import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
-import org.springframework.boot.autoconfigure.web.WebProperties;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
@@ -21,5 +16,10 @@ public class Course {
     private Date createdDate;
 
     @ManyToOne
+    @JoinColumn(name = "idCategory")
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "idUser")
+    private User user;
 }
