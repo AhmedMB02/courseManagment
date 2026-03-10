@@ -16,6 +16,9 @@ public class UserController {
     @PostMapping("/adduser")
     public User createUser(@RequestBody User user){ return userService.saveUser(user);}
 
+    @PutMapping("/updateuser")
+    public User updateUser(@RequestBody User user){ return userService.updateUser(user);}
+
 
     @DeleteMapping("/delete/{id}")
     public void deleteUser(@PathVariable Long id){userService.deleteUserById(id);}
