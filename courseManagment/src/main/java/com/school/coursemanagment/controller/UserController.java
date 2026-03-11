@@ -33,6 +33,13 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping("/students")
+    public List<User> getAllStudent(){return userService.getAllStudent(); }
+
+    @GetMapping("/instructors")
+    public List<User> getAllInstructor(){return userService.getAllInstructor(); }
+
+
     @GetMapping("/test")
     public String test(){
         return "API works";
