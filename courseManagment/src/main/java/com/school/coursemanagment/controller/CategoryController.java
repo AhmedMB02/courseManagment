@@ -1,27 +1,36 @@
 package com.school.coursemanagment.controller;
 
 import com.school.coursemanagment.model.Category;
-import com.school.coursemanagment.repository.CategoryRepository;
+import com.school.coursemanagment.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/categorie")
+@RestController
+@RequestMapping("/categories")
 public class CategoryController {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    CategoryService categoryService;
 
     @GetMapping
     public List<Category> getAllCategory(){
-        return categoryRepository.findAll();
+        return categoryService.getAllCategory();
     }
 
     @GetMapping("/{id}")
     public Category getCategoryById(@PathVariable Long id){
-        return categoryRepository.getReferenceById(id);
+        return categoryService.getCategoryById(id);
+    }
+
+    @PostMapping("/addcat")
+    public Category createCategory(@RequestBody Category category){
+        return categoryService.saveCategory(category);
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return "Category API works";
     }
 }
