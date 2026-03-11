@@ -1,5 +1,6 @@
 package com.school.coursemanagment.services;
 
+import com.school.coursemanagment.Enum.Role;
 import com.school.coursemanagment.model.User;
 import com.school.coursemanagment.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<User> getAllStudent() {
+        return userRepository.findByRole(Role.student);
+    }
+
+    @Override
+    public List<User> getAllInstructor() {
+        return userRepository.findByRole(Role.instructor);
     }
 }
