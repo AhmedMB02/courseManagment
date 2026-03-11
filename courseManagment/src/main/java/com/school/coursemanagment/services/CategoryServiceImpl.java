@@ -1,6 +1,7 @@
 package com.school.coursemanagment.services;
 
 import com.school.coursemanagment.model.Category;
+import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,10 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public Category getCategoryById(Long id) {
         return categoryRepository.getReferenceById(id);
+    }
+
+    @Override
+    public List<Course> getCourseByIdCategory(Long id) {
+        return categoryRepository.findByCategoryIdCategory(id);
     }
 }
