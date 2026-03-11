@@ -19,7 +19,6 @@ public class UserController {
     @PutMapping("/updateuser")
     public User updateUser(@RequestBody User user){ return userService.updateUser(user);}
 
-
     @DeleteMapping("/delete/{id}")
     public void deleteUser(@PathVariable Long id){userService.deleteUserById(id);}
 
@@ -39,9 +38,4 @@ public class UserController {
     @GetMapping("/instructors")
     public List<User> getAllInstructor(){return userService.getAllInstructor(); }
 
-
-    @GetMapping("/test")
-    public String test(){
-        return "API works";
-    }
 }
