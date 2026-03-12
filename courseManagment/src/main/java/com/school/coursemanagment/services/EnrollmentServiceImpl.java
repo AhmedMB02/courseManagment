@@ -15,6 +15,9 @@ public class EnrollmentServiceImpl implements EnrollmentService{
 
     @Override
     public Enrollment enrollStudent(Enrollment enrollment) {
+        if (enrollmentRepository.existsByUserIdUserAndCourseIdCourse(enrollment.getUser().getIdUser(),enrollment.getCourse().getIdCourse())){
+            throw new RuntimeException("Student already enrolled in this course");
+        }
         return enrollmentRepository.save(enrollment);
     }
 
@@ -25,12 +28,12 @@ public class EnrollmentServiceImpl implements EnrollmentService{
 
     @Override
     public List<Enrollment> getEnrollmentsByStudent(Long idUser) {
-        return null;
+        return enrollmentRepository.findByUserIdUser(idUser);
     }
 
     @Override
     public List<Enrollment> getEnrollmentsByCourse(Long idCourse) {
-        return null;
+        return enrollmentRepository.findByCourseIdCourse(idCourse);
     }
 
     @Override
@@ -40,6 +43,6 @@ public class EnrollmentServiceImpl implements EnrollmentService{
 
     @Override
     public Enrollment getEnrollmentById(Long idEnrollment) {
-        return null;
+        return enrollmentRepository.getReferenceById(idEnrollment);
     }
 }
