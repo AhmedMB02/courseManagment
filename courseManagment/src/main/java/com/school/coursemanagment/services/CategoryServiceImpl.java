@@ -40,6 +40,6 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public List<Course> getCourseByIdCategory(Long id) {
-        return categoryRepository.findByCategoryIdCategory(id);
+        return categoryRepository.findByIdCategory(id);
     }
 }
