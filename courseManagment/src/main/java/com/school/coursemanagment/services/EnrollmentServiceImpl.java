@@ -1,7 +1,12 @@
 package com.school.coursemanagment.services;
 
+import com.school.coursemanagment.Enum.Role;
+import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.model.Enrollment;
+import com.school.coursemanagment.model.User;
+import com.school.coursemanagment.repository.CourseRepository;
 import com.school.coursemanagment.repository.EnrollmentRepository;
+import com.school.coursemanagment.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +18,36 @@ public class EnrollmentServiceImpl implements EnrollmentService{
     @Autowired
     EnrollmentRepository enrollmentRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    CourseRepository courseRepository;
+
     @Override
     public Enrollment enrollStudent(Enrollment enrollment) {
-        if (enrollmentRepository.existsByUserIdUserAndCourseIdCourse(enrollment.getUser().getIdUser(),enrollment.getCourse().getIdCourse())){
-            throw new RuntimeException("Student already enrolled in this course");
+
+        Long idUser = enrollment.getUser().getIdUser();
+        User user = enrollmentRepository.findById(idUser).orElseThrow(
+                ()-> new RuntimeException("User not found")
+        ).getUser();
+
+        if(user.getRole()!= Role.student){
+            throw new RuntimeException("Only students can enroll in courses");
         }
+
+        Long idCourse = enrollment.getCourse().getIdCourse();
+        Course course = courseRepository.findById(idCourse)
+                .orElseThrow(()->new RuntimeException("Course not found"));
+
+        boolean exist = enrollmentRepository.existsByUserIdUserAndCourseIdCourse(idUser,idCourse);
+        if(exist) throw new RuntimeException("Student already enrolled in this course");
+
+        enrollment.setUser(user);
+        enrollment.setCourse(course);
+
         return enrollmentRepository.save(enrollment);
+
     }
 
     @Override
