@@ -28,15 +28,17 @@ public class EnrollmentServiceImpl implements EnrollmentService{
     public Enrollment enrollStudent(Enrollment enrollment) {
 
         Long idUser = enrollment.getUser().getIdUser();
-        User user = enrollmentRepository.findById(idUser).orElseThrow(
-                ()-> new RuntimeException("User not found")
-        ).getUser();
+        System.out.println("--------------User ID = " + enrollment.getUser().getIdUser());
+        User user = userRepository.findById(idUser).
+                orElseThrow( ()-> new RuntimeException("User not found")
+        );
 
         if(user.getRole()!= Role.student){
             throw new RuntimeException("Only students can enroll in courses");
         }
 
         Long idCourse = enrollment.getCourse().getIdCourse();
+        System.out.println("--------------Course ID = " + enrollment.getCourse().getIdCourse());
         Course course = courseRepository.findById(idCourse)
                 .orElseThrow(()->new RuntimeException("Course not found"));
 

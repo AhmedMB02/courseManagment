@@ -1,7 +1,7 @@
 package com.school.coursemanagment.repository;
 
 import com.school.coursemanagment.model.Enrollment;
-import org.springframework.data.domain.Example;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
