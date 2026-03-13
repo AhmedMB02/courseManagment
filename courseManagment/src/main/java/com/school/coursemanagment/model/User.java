@@ -1,5 +1,6 @@
 package com.school.coursemanagment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.school.coursemanagment.Enum.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "creator")
+    @JsonIgnore
     private List<Course> courses;
 
     @OneToMany(mappedBy = "user")
