@@ -34,5 +34,6 @@ public class Course {
     private User creator;
 
     @OneToMany(mappedBy = "course")
+    @JsonIgnore
     private List<Enrollment> enrollments;
 }
