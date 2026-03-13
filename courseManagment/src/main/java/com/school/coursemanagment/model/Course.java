@@ -1,5 +1,6 @@
 package com.school.coursemanagment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Course {
 
     @ManyToOne
     @JoinColumn(name = "idCategory")
+    @JsonIgnore
     private Category category;
 
     @ManyToOne
