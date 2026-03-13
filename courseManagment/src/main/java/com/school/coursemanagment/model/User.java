@@ -30,6 +30,7 @@ public class User {
     private List<Course> courses;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Enrollment> enrollments;
 
 }
