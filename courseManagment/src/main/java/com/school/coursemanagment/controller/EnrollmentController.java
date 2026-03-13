@@ -24,7 +24,7 @@ public class EnrollmentController {
         return enrollmentService.getAllEnrollments();
     }
 
-    @GetMapping("all/{id}")
+    @GetMapping("student/{id}")
     public List<Enrollment> getAllEnrollmentsByStudent(@PathVariable Long id){
         return enrollmentService.getEnrollmentsByStudent(id);
     }
