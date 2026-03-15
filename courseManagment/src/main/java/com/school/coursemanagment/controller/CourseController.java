@@ -1,5 +1,6 @@
 package com.school.coursemanagment.controller;
 
+import com.school.coursemanagment.DTO.CourseDTO;
 import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.services.CourseService;
 import com.school.coursemanagment.services.UserService;
@@ -16,7 +17,7 @@ public class CourseController {
     CourseService courseService;
 
     @PostMapping("/addcourse")
-    public Course createCourse(@RequestBody Course course){
+    public CourseDTO createCourse(@RequestBody Course course){
         return courseService.saveCourse(course);
     }
 
@@ -26,17 +27,17 @@ public class CourseController {
     }
 
     @GetMapping("/allcourses")
-    public List<Course> getAllCourses(){
+    public List<CourseDTO> getAllCourses(){
         return courseService.getAllCourses();
     }
 
     @GetMapping("course/{id}")
-    public Course getCourseById(@PathVariable Long id){
+    public CourseDTO getCourseById(@PathVariable Long id){
         return courseService.getCourseById(id);
     }
 
     @PutMapping("/updateCourse")
-    public Course updateCourse(@RequestBody Course course){
+    public CourseDTO updateCourse(@RequestBody Course course){
         return courseService.updateCourse(course);
     }
 
