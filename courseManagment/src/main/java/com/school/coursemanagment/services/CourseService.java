@@ -12,4 +12,5 @@ public interface CourseService {
     List<CourseDTO>getAllCourses();
     CourseDTO getCourseById(Long id);
     CourseDTO convertEntityToDto(Course course);
+    Course convertDtoToEntity(CourseDTO courseDTO);
 }
