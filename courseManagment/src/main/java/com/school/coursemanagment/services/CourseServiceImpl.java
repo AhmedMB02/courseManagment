@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseServiceImpl implements CourseService{
@@ -21,7 +22,7 @@ public class CourseServiceImpl implements CourseService{
     UserRepository userRepository;
 
     @Override
-    public Course saveCourse(Course course) {
+    public CourseDTO saveCourse(Course course) {
 
         Long idUser = course.getCreator().getIdUser();
         User user = userRepository.getReferenceById(idUser);
@@ -30,12 +31,12 @@ public class CourseServiceImpl implements CourseService{
             throw new RuntimeException("Only Instructor can create courses");
         }
         course.setCreator(user);
-        return courseRepository.save(course);
+        return convertEntityToDto( courseRepository.save(course));
     }
 
     @Override
-    public Course updateCourse(Course course) {
-        return courseRepository.save(course);
+    public CourseDTO updateCourse(Course course) {
+        return convertEntityToDto(courseRepository.save(course));
     }
 
     @Override
@@ -44,13 +45,16 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+    public List<CourseDTO> getAllCourses() {
+        return courseRepository.findAll().stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+
     }
 
     @Override
-    public Course getCourseById(Long id) {
-        return courseRepository.findById(id).orElse(null);
+    public CourseDTO getCourseById(Long id) {
+        return convertEntityToDto(courseRepository.findById(id).orElse(null));
     }
 
     @Override
