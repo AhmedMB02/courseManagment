@@ -1,5 +1,6 @@
 package com.school.coursemanagment.services;
 
+import com.school.coursemanagment.DTO.CourseDTO;
 import com.school.coursemanagment.model.Course;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface CourseService {
     void deleteCourseById(Long id);
     List<Course>getAllCourses();
     Course getCourseById(Long id);
+    CourseDTO convertEntityToDto(Course course);
 }
