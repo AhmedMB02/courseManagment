@@ -1,5 +1,6 @@
 package com.school.coursemanagment.services;
 
+import com.school.coursemanagment.DTO.UserDTO;
 import com.school.coursemanagment.Enum.Role;
 import com.school.coursemanagment.model.User;
 import com.school.coursemanagment.repository.UserRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -14,13 +16,14 @@ public class UserServiceImpl implements UserService{
     UserRepository userRepository;
 
     @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public UserDTO saveUser(User user) {
+
+        return convertEntityToDto(userRepository.save(user));
     }
 
     @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    public UserDTO updateUser(User user) {
+        return convertEntityToDto(userRepository.save(user));
     }
 
     @Override
@@ -29,22 +32,48 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+
+        return userRepository.findAll().stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public UserDTO getUserById(Long id) {
+        return convertEntityToDto(userRepository.findById(id).orElse(null));
     }
 
     @Override
-    public List<User> getAllStudent() {
-        return userRepository.findByRole(Role.student);
+    public List<UserDTO> getAllStudent() {
+
+        return userRepository.findByRole(Role.student)
+                .stream().map(this::convertEntityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<User> getAllInstructor() {
-        return userRepository.findByRole(Role.instructor);
+    public List<UserDTO> getAllInstructor() {
+        return  userRepository.findByRole(Role.instructor)
+                .stream().map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDTO convertEntityToDto(User user) {
+
+        return UserDTO.builder()
+                .idUser(user.getIdUser())
+                .name(user.getName())
+                .role(user.getRole())
+                .email(user.getEmail())
+                .courses(user.getCourses())
+                .enrollments(user.getEnrollments())
+                .build();
+    }
+
+    @Override
+    public User convertDtoToEntity(UserDTO userDTO) {
+        return null;
     }
 }
