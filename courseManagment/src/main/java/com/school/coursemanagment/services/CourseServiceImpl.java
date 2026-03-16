@@ -59,25 +59,21 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public CourseDTO convertEntityToDto(Course course) {
-       /* CourseDTO courseDTO = new CourseDTO();
-
-        courseDTO.setIdCourse(course.getIdCourse());
-        courseDTO.setTitle(course.getTitle());
-        courseDTO.setDescription(course.getDescription());
-        courseDTO.setPrice(course.getPrice());
-        courseDTO.setCreatedDate(course.getCreatedDate());
-        courseDTO.setCreator(course.getCreator());
-        courseDTO.setCategory(course.getCategory());
-        courseDTO.setEnrollments(course.getEnrollments());
-        */
         return CourseDTO.builder()
                 .idCourse(course.getIdCourse())
                 .title(course.getTitle()).
                 description(course.getDescription())
                 .price(course.getPrice())
                 .createdDate(course.getCreatedDate())
-                .category(course.getCategory())
+                .nameCat(course.getCategory().getName())
                 .creator(course.getCreator())
                 .enrollments(course.getEnrollments()).build();
     }
+
+    @Override
+    public Course convertDtoToEntity(CourseDTO courseDTO) {
+        return null;
+    }
+
+
 }
