@@ -16,5 +16,5 @@ public class CategoryDTO {
     private Long idCategory;
     private String name;
     private String description;
-    private List<Course> courses;
+    private List<CourseDTO> courses;
 }
