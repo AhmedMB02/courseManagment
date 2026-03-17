@@ -13,7 +13,7 @@ public interface CategoryService {
     void deleteCategoryById(Long id);
     List<CategoryDTO> getAllCategory();
     CategoryDTO getCategoryById(Long id);
-    List<CategoryDTO> getCourseByIdCategory(Long id);
+    List<CourseDTO> getCourseByIdCategory(Long id);
     CategoryDTO convertEntityToDto(Category category);
     Category convertDtoToEntity(CategoryDTO categoryDTO);
 }
