@@ -1,5 +1,6 @@
 package com.school.coursemanagment.services;
 
+import com.school.coursemanagment.DTO.EnrollmentDTO;
 import com.school.coursemanagment.model.Enrollment;
 import com.school.coursemanagment.model.User;
 
@@ -7,10 +8,10 @@ import java.util.List;
 
 public interface EnrollmentService {
 
-    Enrollment enrollStudent(Enrollment enrollment);
-    List<Enrollment> getAllEnrollments();
-    List<Enrollment> getEnrollmentsByStudent(Long idUser);
-    List<Enrollment> getEnrollmentsByCourse(Long idCourse);
+    EnrollmentDTOO enrollStudent(Enrollment enrollment);
+    List<EnrollmentDTOO> getAllEnrollments();
+    List<EnrollmentDTOO> getEnrollmentsByStudent(Long idUser);
+    List<EnrollmentDTOO> getEnrollmentsByCourse(Long idCourse);
     void deleteEnrollment(Long idEnrollment);
-    Enrollment getEnrollmentById(Long idEnrollment);
+    EnrollmentDTOO getEnrollmentById(Long idEnrollment);
 }
