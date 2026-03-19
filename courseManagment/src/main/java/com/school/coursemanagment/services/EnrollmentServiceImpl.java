@@ -1,5 +1,8 @@
 package com.school.coursemanagment.services;
 
+import com.school.coursemanagment.DTO.CourseDTO;
+import com.school.coursemanagment.DTO.EnrollmentDTO;
+import com.school.coursemanagment.DTO.UserDTO;
 import com.school.coursemanagment.Enum.Role;
 import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.model.Enrollment;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EnrollmentServiceImpl implements EnrollmentService{
@@ -25,7 +29,7 @@ public class EnrollmentServiceImpl implements EnrollmentService{
     CourseRepository courseRepository;
 
     @Override
-    public Enrollment enrollStudent(Enrollment enrollment) {
+    public EnrollmentDTO enrollStudent(Enrollment enrollment) {
 
         Long idUser = enrollment.getUser().getIdUser();
         System.out.println("--------------User ID = " + enrollment.getUser().getIdUser());
@@ -48,23 +52,33 @@ public class EnrollmentServiceImpl implements EnrollmentService{
         enrollment.setUser(user);
         enrollment.setCourse(course);
 
-        return enrollmentRepository.save(enrollment);
+        return convertEntityToDto(enrollmentRepository.save(enrollment));
 
     }
 
     @Override
-    public List<Enrollment> getAllEnrollments() {
-        return enrollmentRepository.findAll();
+    public List<EnrollmentDTO> getAllEnrollments() {
+
+        return enrollmentRepository.findAll().stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList())
+                ;
     }
 
     @Override
-    public List<Enrollment> getEnrollmentsByStudent(Long idUser) {
-        return enrollmentRepository.findByUserIdUser(idUser);
+    public List<EnrollmentDTO> getEnrollmentsByStudent(Long idUser) {
+        return enrollmentRepository.findByUserIdUser(idUser)
+                .stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Enrollment> getEnrollmentsByCourse(Long idCourse) {
-        return enrollmentRepository.findByCourseIdCourse(idCourse);
+    public List<EnrollmentDTO> getEnrollmentsByCourse(Long idCourse) {
+        return enrollmentRepository.findByCourseIdCourse(idCourse)
+                .stream().map(this::convertEntityToDto)
+                .collect(Collectors.toList())
+                ;
     }
 
     @Override
@@ -73,7 +87,41 @@ public class EnrollmentServiceImpl implements EnrollmentService{
     }
 
     @Override
-    public Enrollment getEnrollmentById(Long idEnrollment) {
-        return enrollmentRepository.getReferenceById(idEnrollment);
+    public EnrollmentDTO getEnrollmentById(Long idEnrollment) {
+        return convertEntityToDto(enrollmentRepository.getReferenceById(idEnrollment));
     }
+
+    @Override
+    public Enrollment convertDtoToEntity(EnrollmentDTO enrollmentDTO) {
+        return null;
+    }
+
+    // ✅ méthode manquante
+    private EnrollmentDTO convertEntityToDto(Enrollment enrollment) {
+        return EnrollmentDTO.builder()
+                .id(enrollment.getId())
+                .enrollmentDate(enrollment.getEnrollmentDate())
+
+                .user(
+                        UserDTO.builder()
+                                .idUser(enrollment.getUser().getIdUser())
+                                .name(enrollment.getUser().getName())
+                                .email(enrollment.getUser().getEmail())
+                                .role(enrollment.getUser().getRole())
+                                .build()
+                )
+
+                .course(
+                        CourseDTO.builder()
+                                .idCourse(enrollment.getCourse().getIdCourse())
+                                .title(enrollment.getCourse().getTitle())
+                                .description(enrollment.getCourse().getDescription())
+                                .price(enrollment.getCourse().getPrice())
+                                .build()
+                )
+
+                .build();
+    }
+
+
 }
