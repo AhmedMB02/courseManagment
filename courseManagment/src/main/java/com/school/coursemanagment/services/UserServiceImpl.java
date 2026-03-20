@@ -4,6 +4,7 @@ import com.school.coursemanagment.DTO.UserDTO;
 import com.school.coursemanagment.Enum.Role;
 import com.school.coursemanagment.model.User;
 import com.school.coursemanagment.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,11 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
+
     @Override
     public UserDTO saveUser(User user) {
-
         return convertEntityToDto(userRepository.save(user));
     }
 
@@ -59,9 +62,10 @@ public class UserServiceImpl implements UserService{
                 .collect(Collectors.toList());
     }
 
+    //Version 1
+    /*
     @Override
     public UserDTO convertEntityToDto(User user) {
-
         return UserDTO.builder()
                 .idUser(user.getIdUser())
                 .name(user.getName())
@@ -71,9 +75,16 @@ public class UserServiceImpl implements UserService{
                 .enrollments(user.getEnrollments())
                 .build();
     }
+    */
+
+    @Override
+    public UserDTO convertEntityToDto(User user) {
+        UserDTO userDTO = modelMapper.map(user,UserDTO.class);
+        return userDTO;
+    }
 
     @Override
     public User convertDtoToEntity(UserDTO userDTO) {
-        return null;
+        return modelMapper.map(userDTO,User.class );
     }
 }
