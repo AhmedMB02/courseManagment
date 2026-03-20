@@ -21,7 +21,4 @@ public class UserDTO {
     private String name;
     private String email;
     private Role role;
-
-    private List<Course> courses;
-    private List<Enrollment> enrollments;
 }
