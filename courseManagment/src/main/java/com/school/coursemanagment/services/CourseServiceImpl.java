@@ -6,6 +6,7 @@ import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.model.User;
 import com.school.coursemanagment.repository.CourseRepository;
 import com.school.coursemanagment.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class CourseServiceImpl implements CourseService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     public CourseDTO saveCourse(Course course) {
@@ -59,20 +63,12 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public CourseDTO convertEntityToDto(Course course) {
-        return CourseDTO.builder()
-                .idCourse(course.getIdCourse())
-                .title(course.getTitle()).
-                description(course.getDescription())
-                .price(course.getPrice())
-                .createdDate(course.getCreatedDate())
-                .nameCat(course.getCategory().getName())
-                .creator(course.getCreator())
-                .enrollments(course.getEnrollments()).build();
+        return modelMapper.map(course,CourseDTO.class);
     }
 
     @Override
     public Course convertDtoToEntity(CourseDTO courseDTO) {
-        return null;
+        return modelMapper.map(courseDTO,Course.class);
     }
 
 
