@@ -1,5 +1,6 @@
 package com.school.coursemanagment.controller;
 
+import com.school.coursemanagment.DTO.UserDTO;
 import com.school.coursemanagment.model.User;
 import com.school.coursemanagment.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,31 +15,31 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/adduser")
-    public User createUser(@RequestBody User user){ return userService.saveUser(user);}
+    public UserDTO createUser(@RequestBody UserDTO userDTO){ return userService.saveUser(userDTO);}
 
     @PutMapping("/updateuser/{id}")
-    public User updateUser(@PathVariable Long id,@RequestBody User user){
-        user.setIdUser(id);
-        return userService.updateUser(user);
+    public UserDTO updateUser(@PathVariable Long id,@RequestBody UserDTO userDTO){
+        userDTO.setIdUser(id);
+        return userService.updateUser(userDTO);
     }
 
     @DeleteMapping("/delete/{id}")
     public void deleteUser(@PathVariable Long id){userService.deleteUserById(id);}
 
     @GetMapping("/allUsers")
-    public List<User>getAllUsers(){
+    public List<UserDTO>getAllUsers(){
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id){
+    public UserDTO getUserById(@PathVariable Long id){
         return userService.getUserById(id);
     }
 
     @GetMapping("/students")
-    public List<User> getAllStudent(){return userService.getAllStudent(); }
+    public List<UserDTO> getAllStudent(){return userService.getAllStudent(); }
 
     @GetMapping("/instructors")
-    public List<User> getAllInstructor(){return userService.getAllInstructor(); }
+    public List<UserDTO> getAllInstructor(){return userService.getAllInstructor(); }
 
 }
