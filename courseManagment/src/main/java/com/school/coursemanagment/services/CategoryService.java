@@ -8,8 +8,8 @@ import com.school.coursemanagment.model.Course;
 import java.util.List;
 
 public interface CategoryService {
-    CategoryDTO saveCategory(Category category);
-    CategoryDTO updateCategory(Category category);
+    CategoryDTO saveCategory(CategoryDTO categoryDTO);
+    CategoryDTO updateCategory(CategoryDTO categoryDTO);
     void deleteCategoryById(Long id);
     List<CategoryDTO> getAllCategory();
     CategoryDTO getCategoryById(Long id);
