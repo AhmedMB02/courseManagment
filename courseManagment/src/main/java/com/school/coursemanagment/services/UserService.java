@@ -7,8 +7,8 @@ import com.school.coursemanagment.model.User;
 import java.util.List;
 
 public interface UserService {
-    UserDTO saveUser(User user);
-    UserDTO updateUser(User user);
+    UserDTO saveUser(UserDTO userDTO);
+    UserDTO updateUser(UserDTO userDTO);
     void deleteUserById(Long id);
     List<UserDTO>getAllUsers();
     UserDTO getUserById(Long id);

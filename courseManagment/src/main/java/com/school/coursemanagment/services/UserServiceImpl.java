@@ -20,13 +20,13 @@ public class UserServiceImpl implements UserService{
     ModelMapper modelMapper;
 
     @Override
-    public UserDTO saveUser(User user) {
-        return convertEntityToDto(userRepository.save(user));
+    public UserDTO saveUser(UserDTO userDTO) {
+        return convertEntityToDto(userRepository.save(convertDtoToEntity(userDTO)));
     }
 
     @Override
-    public UserDTO updateUser(User user) {
-        return convertEntityToDto(userRepository.save(user));
+    public UserDTO updateUser(UserDTO userDTO) {
+        return convertEntityToDto(userRepository.save(convertDtoToEntity(userDTO)));
     }
 
     @Override
