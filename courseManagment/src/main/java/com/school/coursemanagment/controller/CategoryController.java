@@ -1,5 +1,7 @@
 package com.school.coursemanagment.controller;
 
+import com.school.coursemanagment.DTO.CategoryDTO;
+import com.school.coursemanagment.DTO.CourseDTO;
 import com.school.coursemanagment.model.Category;
 import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.services.CategoryService;
@@ -16,27 +18,27 @@ public class CategoryController {
     CategoryService categoryService;
 
     @GetMapping
-    public List<Category> getAllCategory(){
+    public List<CategoryDTO> getAllCategory(){
         return categoryService.getAllCategory();
     }
 
     @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable Long id){
+    public CategoryDTO getCategoryById(@PathVariable Long id){
         return categoryService.getCategoryById(id);
     }
 
     @GetMapping("/{id}/courses")
-    public List<Course> getCoursesByCategoryId(@PathVariable Long id){return  categoryService.getCourseByIdCategory(id);}
+    public List<CourseDTO> getCoursesByCategoryId(@PathVariable Long id){return  categoryService.getCourseByIdCategory(id);}
 
     @PostMapping("/addcat")
-    public Category createCategory(@RequestBody Category category){
-        return categoryService.saveCategory(category);
+    public CategoryDTO createCategory(@RequestBody CategoryDTO categoryDTO){
+        return categoryService.saveCategory(categoryDTO);
     }
 
     @PutMapping("/updatecat/{id}")
-    public Category updateCategory(@PathVariable Long id,@RequestBody Category category){
-        category.setIdCategory(id);
-        return categoryService.updateCategory(category);
+    public CategoryDTO updateCategory(@PathVariable Long id,@RequestBody CategoryDTO categoryDTO){
+        categoryDTO.setIdCategory(id);
+        return categoryService.updateCategory(categoryDTO);
     }
 
     @DeleteMapping("/deletecat/{id}")
