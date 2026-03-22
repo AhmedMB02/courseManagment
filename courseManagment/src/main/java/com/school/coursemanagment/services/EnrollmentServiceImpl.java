@@ -10,9 +10,11 @@ import com.school.coursemanagment.model.User;
 import com.school.coursemanagment.repository.CourseRepository;
 import com.school.coursemanagment.repository.EnrollmentRepository;
 import com.school.coursemanagment.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,11 +30,14 @@ public class EnrollmentServiceImpl implements EnrollmentService{
     @Autowired
     CourseRepository courseRepository;
 
-    @Override
-    public EnrollmentDTO enrollStudent(Enrollment enrollment) {
+    @Autowired
+    ModelMapper modelMapper;
 
-        Long idUser = enrollment.getUser().getIdUser();
-        System.out.println("--------------User ID = " + enrollment.getUser().getIdUser());
+    @Override
+    public EnrollmentDTO enrollStudent(EnrollmentDTO enrollmentDTO) {
+
+        Long idUser = enrollmentDTO.getUser().getIdUser();
+        System.out.println("--------------User ID = " + enrollmentDTO.getUser().getIdUser());
         User user = userRepository.findById(idUser).
                 orElseThrow( ()-> new RuntimeException("User not found")
         );
@@ -41,19 +46,24 @@ public class EnrollmentServiceImpl implements EnrollmentService{
             throw new RuntimeException("Only students can enroll in courses");
         }
 
-        Long idCourse = enrollment.getCourse().getIdCourse();
-        System.out.println("--------------Course ID = " + enrollment.getCourse().getIdCourse());
+        Long idCourse = enrollmentDTO.getCourse().getIdCourse();
+        System.out.println("--------------Course ID = " + enrollmentDTO.getCourse().getIdCourse());
         Course course = courseRepository.findById(idCourse)
                 .orElseThrow(()->new RuntimeException("Course not found"));
 
         boolean exist = enrollmentRepository.existsByUserIdUserAndCourseIdCourse(idUser,idCourse);
         if(exist) throw new RuntimeException("Student already enrolled in this course");
 
+        Enrollment enrollment = new Enrollment();
+        enrollment.setEnrollmentDate(
+                enrollmentDTO.getEnrollmentDate()!= null ?enrollmentDTO.getEnrollmentDate(): LocalDate.now()
+        );
         enrollment.setUser(user);
         enrollment.setCourse(course);
 
-        return convertEntityToDto(enrollmentRepository.save(enrollment));
+        Enrollment saved = enrollmentRepository.save(enrollment);
 
+        return convertEntityToDto(saved);
     }
 
     @Override
@@ -93,10 +103,16 @@ public class EnrollmentServiceImpl implements EnrollmentService{
 
     @Override
     public Enrollment convertDtoToEntity(EnrollmentDTO enrollmentDTO) {
-        return null;
+        return modelMapper.map(enrollmentDTO,Enrollment.class);
     }
 
-    // ✅ méthode manquante
+    @Override
+    public EnrollmentDTO convertEntityToDto(Enrollment enrollment) {
+        return modelMapper.map(enrollment,EnrollmentDTO.class);
+    }
+
+    // méthode manquante
+    /*
     private EnrollmentDTO convertEntityToDto(Enrollment enrollment) {
         return EnrollmentDTO.builder()
                 .id(enrollment.getId())
@@ -122,6 +138,7 @@ public class EnrollmentServiceImpl implements EnrollmentService{
 
                 .build();
     }
+     */
 
 
 }

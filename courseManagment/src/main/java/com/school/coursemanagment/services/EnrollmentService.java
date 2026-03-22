@@ -9,11 +9,12 @@ import java.util.List;
 
 public interface EnrollmentService {
 
-    EnrollmentDTO enrollStudent(Enrollment enrollment);
+    EnrollmentDTO enrollStudent(EnrollmentDTO enrollmentDTO);
     List<EnrollmentDTO> getAllEnrollments();
     List<EnrollmentDTO> getEnrollmentsByStudent(Long idUser);
     List<EnrollmentDTO> getEnrollmentsByCourse(Long idCourse);
     void deleteEnrollment(Long idEnrollment);
     EnrollmentDTO getEnrollmentById(Long idEnrollment);
     Enrollment convertDtoToEntity(EnrollmentDTO enrollmentDTO);
+    EnrollmentDTO convertEntityToDto(Enrollment enrollment);
 }
