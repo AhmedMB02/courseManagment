@@ -18,7 +18,7 @@ public class EnrollmentDTO {
 
     private LocalDate enrollmentDate;
 
-    private UserDTO user;
+    private Long userId;
 
-    private CourseDTO course;
+    private Long courseId;
 }
