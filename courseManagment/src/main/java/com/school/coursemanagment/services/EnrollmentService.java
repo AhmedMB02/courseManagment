@@ -1,9 +1,7 @@
 package com.school.coursemanagment.services;
 
 import com.school.coursemanagment.DTO.EnrollmentDTO;
-import com.school.coursemanagment.DTO.UserDTO;
 import com.school.coursemanagment.model.Enrollment;
-import com.school.coursemanagment.model.User;
 
 import java.util.List;
 

@@ -4,6 +4,9 @@ import com.school.coursemanagment.DTO.CourseDTO;
 import com.school.coursemanagment.DTO.EnrollmentDTO;
 import com.school.coursemanagment.DTO.UserDTO;
 import com.school.coursemanagment.Enum.Role;
+import com.school.coursemanagment.exception.AlreadyExistsException;
+import com.school.coursemanagment.exception.BadRequestException;
+import com.school.coursemanagment.exception.ResourceNotFoundException;
 import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.model.Enrollment;
 import com.school.coursemanagment.model.User;
@@ -36,23 +39,23 @@ public class EnrollmentServiceImpl implements EnrollmentService{
     @Override
     public EnrollmentDTO enrollStudent(EnrollmentDTO enrollmentDTO) {
 
-        Long idUser = enrollmentDTO.getUser().getIdUser();
-        System.out.println("--------------User ID = " + enrollmentDTO.getUser().getIdUser());
+        Long idUser = enrollmentDTO.getUserId();
+        System.out.println("--------------User ID = " + enrollmentDTO.getUserId());
         User user = userRepository.findById(idUser).
-                orElseThrow( ()-> new RuntimeException("User not found")
+                orElseThrow( ()-> new ResourceNotFoundException("User not found")
         );
 
         if(user.getRole()!= Role.student){
-            throw new RuntimeException("Only students can enroll in courses");
+            throw new BadRequestException("Only students can enroll in courses");
         }
 
-        Long idCourse = enrollmentDTO.getCourse().getIdCourse();
-        System.out.println("--------------Course ID = " + enrollmentDTO.getCourse().getIdCourse());
+        Long idCourse = enrollmentDTO.getCourseId();
+        System.out.println("--------------Course ID = " + enrollmentDTO.getCourseId());
         Course course = courseRepository.findById(idCourse)
-                .orElseThrow(()->new RuntimeException("Course not found"));
+                .orElseThrow(()->new ResourceNotFoundException("Course not found"));
 
         boolean exist = enrollmentRepository.existsByUserIdUserAndCourseIdCourse(idUser,idCourse);
-        if(exist) throw new RuntimeException("Student already enrolled in this course");
+        if(exist) throw new AlreadyExistsException("Student already enrolled in this course");
 
         Enrollment enrollment = new Enrollment();
         enrollment.setEnrollmentDate(
