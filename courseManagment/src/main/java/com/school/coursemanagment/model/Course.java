@@ -31,6 +31,7 @@ public class Course {
 
     @ManyToOne
     @JoinColumn(name = "idUser")
+    @JsonIgnore
     private User creator;
 
     @OneToMany(mappedBy = "course")
