@@ -5,6 +5,7 @@ import com.school.coursemanagment.DTO.CourseDTO;
 import com.school.coursemanagment.model.Category;
 import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.repository.CategoryRepository;
+import com.school.coursemanagment.repository.CourseRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Override
     public CategoryDTO saveCategory(CategoryDTO categoryDTO) {
@@ -55,7 +59,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public List<CourseDTO> getCourseByIdCategory(Long id) {
-        return categoryRepository.findByIdCategory(id).stream()
+        return courseRepository.findByCategoryIdCategory(id).stream()
                 .map(courseService::convertEntityToDto)
                 .collect(Collectors.toList());
     }
