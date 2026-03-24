@@ -2,6 +2,7 @@ package com.school.coursemanagment.services;
 
 import com.school.coursemanagment.DTO.CategoryDTO;
 import com.school.coursemanagment.DTO.CourseDTO;
+import com.school.coursemanagment.exception.AlreadyExistsException;
 import com.school.coursemanagment.model.Category;
 import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.repository.CategoryRepository;
@@ -30,7 +31,9 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public CategoryDTO saveCategory(CategoryDTO categoryDTO) {
-
+        if(categoryRepository.existsByName(categoryDTO.getName())){
+            throw new AlreadyExistsException("Category already exists in database");
+        }
         return convertEntityToDto(categoryRepository.save(convertDtoToEntity(categoryDTO)));
     }
 
