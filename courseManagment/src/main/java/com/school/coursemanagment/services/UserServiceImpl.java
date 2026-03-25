@@ -2,6 +2,7 @@ package com.school.coursemanagment.services;
 
 import com.school.coursemanagment.DTO.UserDTO;
 import com.school.coursemanagment.Enum.Role;
+import com.school.coursemanagment.exception.AlreadyExistsException;
 import com.school.coursemanagment.model.User;
 import com.school.coursemanagment.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -21,6 +22,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO saveUser(UserDTO userDTO) {
+        if(userRepository.existsByEmail(userDTO.getEmail())){
+            if(userRepository.findByRole(userDTO.getRole()).equals(Role.student)){
+                throw new AlreadyExistsException("Student Already exist");
+            }else
+                throw new AlreadyExistsException("Instructor Already exisit");
+        }
         return convertEntityToDto(userRepository.save(convertDtoToEntity(userDTO)));
     }
 
