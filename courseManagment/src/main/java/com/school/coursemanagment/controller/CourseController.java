@@ -1,9 +1,7 @@
 package com.school.coursemanagment.controller;
 
 import com.school.coursemanagment.DTO.CourseDTO;
-import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.services.CourseService;
-import com.school.coursemanagment.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +15,8 @@ public class CourseController {
     CourseService courseService;
 
     @PostMapping("/addcourse")
-    public CourseDTO createCourse(@RequestBody Course course){
-        return courseService.saveCourse(course);
+    public CourseDTO createCourse(@RequestBody CourseDTO courseDTO){
+        return courseService.saveCourse(courseDTO);
     }
 
     @DeleteMapping("/deletecourse/{id}")
@@ -37,8 +35,8 @@ public class CourseController {
     }
 
     @PutMapping("/updateCourse")
-    public CourseDTO updateCourse(@RequestBody Course course){
-        return courseService.updateCourse(course);
+    public CourseDTO updateCourse(@RequestBody CourseDTO courseDTO){
+        return courseService.updateCourse(courseDTO);
     }
 
 }
