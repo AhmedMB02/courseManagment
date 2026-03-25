@@ -30,18 +30,18 @@ public class EnrollmentController {
         return enrollmentService.getEnrollmentsByStudent(id);
     }
 
-    @GetMapping("/all/course/{id}")
+    @GetMapping("/all/course/{idCourse}")
     public List<EnrollmentDTO> getEnrollmentsByCourse(@PathVariable Long idCourse){
         return enrollmentService.getEnrollmentsByCourse(idCourse);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteEnrollment(@PathVariable Long idEnrollment){
-        enrollmentService.deleteEnrollment(idEnrollment);
+    public void deleteEnrollment(@PathVariable Long id){
+        enrollmentService.deleteEnrollment(id);
     }
 
-    @GetMapping("/{id}")
-    public EnrollmentDTO getEnrollmentById(@PathVariable Long idEnrollment){
-        return enrollmentService.getEnrollmentById(idEnrollment);
+    @GetMapping("/{idenroll}")
+    public EnrollmentDTO getEnrollmentById(@PathVariable Long idenroll){
+        return enrollmentService.getEnrollmentById(idenroll);
     }
 }
