@@ -6,8 +6,8 @@ import com.school.coursemanagment.model.Course;
 import java.util.List;
 
 public interface CourseService {
-    CourseDTO saveCourse(Course course);
-    CourseDTO updateCourse(Course course);
+    CourseDTO saveCourse(CourseDTO courseDTO);
+    CourseDTO updateCourse(CourseDTO courseDTO);
     void deleteCourseById(Long id);
     List<CourseDTO>getAllCourses();
     CourseDTO getCourseById(Long id);

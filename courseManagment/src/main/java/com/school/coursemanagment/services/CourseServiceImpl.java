@@ -2,6 +2,8 @@ package com.school.coursemanagment.services;
 
 import com.school.coursemanagment.DTO.CourseDTO;
 import com.school.coursemanagment.Enum.Role;
+import com.school.coursemanagment.exception.BadRequestException;
+import com.school.coursemanagment.exception.ResourceNotFoundException;
 import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.model.User;
 import com.school.coursemanagment.repository.CourseRepository;
@@ -26,21 +28,25 @@ public class CourseServiceImpl implements CourseService{
     ModelMapper modelMapper;
 
     @Override
-    public CourseDTO saveCourse(Course course) {
+    public CourseDTO saveCourse(CourseDTO courseDTO) {
 
-        Long idUser = course.getCreator().getIdUser();
-        User user = userRepository.getReferenceById(idUser);
+        Long idUser = courseDTO.getCreator().getIdUser();
+
+        User user = userRepository.findById(idUser)
+                .orElseThrow(()->new ResourceNotFoundException("User Not Found"));
 
         if(!user.getRole().toString().equalsIgnoreCase(String.valueOf(Role.instructor))){
-            throw new RuntimeException("Only Instructor can create courses");
+            throw new BadRequestException("Only Instructor can create courses");
         }
+        Course course = convertDtoToEntity(courseDTO);
         course.setCreator(user);
+
         return convertEntityToDto( courseRepository.save(course));
     }
 
     @Override
-    public CourseDTO updateCourse(Course course) {
-        return convertEntityToDto(courseRepository.save(course));
+    public CourseDTO updateCourse(CourseDTO courseDTO) {
+        return convertEntityToDto(courseRepository.save(convertDtoToEntity(courseDTO)));
     }
 
     @Override
