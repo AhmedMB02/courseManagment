@@ -2,8 +2,6 @@ package com.school.coursemanagment.controller;
 
 import com.school.coursemanagment.DTO.CategoryDTO;
 import com.school.coursemanagment.DTO.CourseDTO;
-import com.school.coursemanagment.model.Category;
-import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

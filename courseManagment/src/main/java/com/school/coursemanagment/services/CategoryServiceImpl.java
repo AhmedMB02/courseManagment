@@ -4,7 +4,6 @@ import com.school.coursemanagment.DTO.CategoryDTO;
 import com.school.coursemanagment.DTO.CourseDTO;
 import com.school.coursemanagment.exception.AlreadyExistsException;
 import com.school.coursemanagment.model.Category;
-import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.repository.CategoryRepository;
 import com.school.coursemanagment.repository.CourseRepository;
 import org.modelmapper.ModelMapper;
