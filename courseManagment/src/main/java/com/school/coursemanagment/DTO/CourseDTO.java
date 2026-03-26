@@ -21,7 +21,6 @@ public class CourseDTO {
     private String description;
     private Double price ;
     private Date createdDate;
-    private Category category;
-    private User creator;
-    private List<Enrollment> enrollments;
+    private Long idCategory;
+    private Long idCreator;
 }

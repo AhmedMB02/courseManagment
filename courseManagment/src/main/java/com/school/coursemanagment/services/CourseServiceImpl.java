@@ -4,8 +4,10 @@ import com.school.coursemanagment.DTO.CourseDTO;
 import com.school.coursemanagment.Enum.Role;
 import com.school.coursemanagment.exception.BadRequestException;
 import com.school.coursemanagment.exception.ResourceNotFoundException;
+import com.school.coursemanagment.model.Category;
 import com.school.coursemanagment.model.Course;
 import com.school.coursemanagment.model.User;
+import com.school.coursemanagment.repository.CategoryRepository;
 import com.school.coursemanagment.repository.CourseRepository;
 import com.school.coursemanagment.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -25,28 +27,53 @@ public class CourseServiceImpl implements CourseService{
     UserRepository userRepository;
 
     @Autowired
+    CategoryRepository categoryRepository;
+
+    @Autowired
     ModelMapper modelMapper;
 
     @Override
     public CourseDTO saveCourse(CourseDTO courseDTO) {
 
-        Long idUser = courseDTO.getCreator().getIdUser();
+        Long idUser = courseDTO.getIdCreator();
 
         User user = userRepository.findById(idUser)
-                .orElseThrow(()->new ResourceNotFoundException("User Not Found"));
+                .orElseThrow(()->new ResourceNotFoundException("Instructor Not Found"));
+
+        Category category = categoryRepository.findById(courseDTO.getIdCategory())
+                .orElseThrow( () -> new ResourceNotFoundException("Category Not Found"));
 
         if(!user.getRole().toString().equalsIgnoreCase(String.valueOf(Role.instructor))){
             throw new BadRequestException("Only Instructor can create courses");
         }
         Course course = convertDtoToEntity(courseDTO);
-        course.setCreator(user);
 
+        course.setCreator(user);
+        course.setCategory(category);
         return convertEntityToDto( courseRepository.save(course));
     }
 
     @Override
     public CourseDTO updateCourse(CourseDTO courseDTO) {
-        return convertEntityToDto(courseRepository.save(convertDtoToEntity(courseDTO)));
+
+        Course existingCourse = courseRepository.findById(courseDTO.getIdCourse())
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+
+        modelMapper.map(courseDTO, existingCourse); // title, description, price, etc.
+
+        if(courseDTO.getIdCategory() != null) {
+            Category category = categoryRepository.findById(courseDTO.getIdCategory())
+                    .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+            existingCourse.setCategory(category);
+        }
+
+        if(courseDTO.getIdCreator() != null) {
+            User user = userRepository.findById(courseDTO.getIdCreator())
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+            existingCourse.setCreator(user);
+        }
+
+        return convertEntityToDto(courseRepository.save(existingCourse));
     }
 
     @Override
@@ -76,6 +103,5 @@ public class CourseServiceImpl implements CourseService{
     public Course convertDtoToEntity(CourseDTO courseDTO) {
         return modelMapper.map(courseDTO,Course.class);
     }
-
 
 }
