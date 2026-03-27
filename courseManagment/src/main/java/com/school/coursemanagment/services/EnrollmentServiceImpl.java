@@ -1,8 +1,7 @@
 package com.school.coursemanagment.services;
 
-import com.school.coursemanagment.DTO.CourseDTO;
+
 import com.school.coursemanagment.DTO.EnrollmentDTO;
-import com.school.coursemanagment.DTO.UserDTO;
 import com.school.coursemanagment.Enum.Role;
 import com.school.coursemanagment.exception.AlreadyExistsException;
 import com.school.coursemanagment.exception.BadRequestException;

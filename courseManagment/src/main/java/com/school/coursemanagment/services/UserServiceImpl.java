@@ -69,20 +69,6 @@ public class UserServiceImpl implements UserService{
                 .collect(Collectors.toList());
     }
 
-    //Version 1
-    /*
-    @Override
-    public UserDTO convertEntityToDto(User user) {
-        return UserDTO.builder()
-                .idUser(user.getIdUser())
-                .name(user.getName())
-                .role(user.getRole())
-                .email(user.getEmail())
-                .courses(user.getCourses())
-                .enrollments(user.getEnrollments())
-                .build();
-    }
-    */
 
     @Override
     public UserDTO convertEntityToDto(User user) {
