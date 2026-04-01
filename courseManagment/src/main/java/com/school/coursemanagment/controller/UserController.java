@@ -4,6 +4,8 @@ import com.school.coursemanagment.DTO.UserDTO;
 import com.school.coursemanagment.model.User;
 import com.school.coursemanagment.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +17,9 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/adduser")
-    public UserDTO createUser(@RequestBody UserDTO userDTO){ return userService.saveUser(userDTO);}
+    public UserDTO createUser(@Validated @RequestBody UserDTO userDTO){
+        return userService.saveUser(userDTO);
+    }
 
     @PutMapping("/updateuser/{id}")
     public UserDTO updateUser(@PathVariable Long id,@RequestBody UserDTO userDTO){
@@ -24,6 +28,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('admin')")
     public void deleteUser(@PathVariable Long id){userService.deleteUserById(id);}
 
     @GetMapping("/allUsers")
@@ -37,9 +42,11 @@ public class UserController {
     }
 
     @GetMapping("/students")
+    @PreAuthorize("hasAnyRole('admin','instructor')")
     public List<UserDTO> getAllStudent(){return userService.getAllStudent(); }
 
     @GetMapping("/instructors")
+    @PreAuthorize("hasAnyRole('admin','instructor')")
     public List<UserDTO> getAllInstructor(){return userService.getAllInstructor(); }
 
 }
