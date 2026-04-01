@@ -2,15 +2,15 @@ package com.school.coursemanagment.DTO;
 
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.school.coursemanagment.Enum.Role;
-import com.school.coursemanagment.model.Course;
-import com.school.coursemanagment.model.Enrollment;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.processing.Pattern;
 
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,4 +21,7 @@ public class UserDTO {
     private String name;
     private String email;
     private Role role;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 }
