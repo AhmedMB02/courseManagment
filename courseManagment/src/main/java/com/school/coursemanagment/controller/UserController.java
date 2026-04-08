@@ -3,6 +3,7 @@ package com.school.coursemanagment.controller;
 import com.school.coursemanagment.DTO.UserDTO;
 import com.school.coursemanagment.model.User;
 import com.school.coursemanagment.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,9 +15,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
     @Autowired
     UserService userService;
+
 
     @PostMapping("/adduser")
     public UserDTO createUser(@Validated @RequestBody UserDTO userDTO){
