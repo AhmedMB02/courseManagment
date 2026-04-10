@@ -60,7 +60,7 @@ public class UserController {
 
     /*
     @PostMapping("/login")
-    public ResponseEntity<?>login(@Validated  ){
+    public ResponseEntity<?>login(@Valid){
 
     }
 
@@ -68,7 +68,7 @@ public class UserController {
     public ResponseEntity<UserDTO> getMe(@AuthenticationPrincipal User currentUser){
 
     }
-*/
 
+*/
 
 }
