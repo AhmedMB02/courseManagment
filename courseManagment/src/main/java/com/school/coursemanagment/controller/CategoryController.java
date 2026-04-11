@@ -3,6 +3,7 @@ package com.school.coursemanagment.controller;
 import com.school.coursemanagment.DTO.CategoryDTO;
 import com.school.coursemanagment.DTO.CourseDTO;
 import com.school.coursemanagment.services.CategoryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
+@RequiredArgsConstructor
 public class CategoryController {
 
-    @Autowired
-    CategoryService categoryService;
+
+    private final CategoryService categoryService;
 
     @GetMapping
     public List<CategoryDTO> getAllCategory(){
