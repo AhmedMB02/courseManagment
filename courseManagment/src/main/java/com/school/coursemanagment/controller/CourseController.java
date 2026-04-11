@@ -2,6 +2,7 @@ package com.school.coursemanagment.controller;
 
 import com.school.coursemanagment.DTO.CourseDTO;
 import com.school.coursemanagment.services.CourseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +10,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/courseApi")
+@RequiredArgsConstructor
 public class CourseController {
 
-    @Autowired
-    CourseService courseService;
+
+    private final CourseService courseService;
 
     @PostMapping("/addcourse")
     public CourseDTO createCourse(@RequestBody CourseDTO courseDTO){
