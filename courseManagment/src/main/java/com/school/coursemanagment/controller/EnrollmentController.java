@@ -3,6 +3,7 @@ package com.school.coursemanagment.controller;
 import com.school.coursemanagment.DTO.EnrollmentDTO;
 import com.school.coursemanagment.model.Enrollment;
 import com.school.coursemanagment.services.EnrollmentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/enrollment")
+@RequiredArgsConstructor
 public class EnrollmentController {
 
-    @Autowired
-    EnrollmentService enrollmentService;
+
+    private final EnrollmentService enrollmentService;
 
     @PostMapping("/enroll")
     public EnrollmentDTO createEnrollment(@RequestBody EnrollmentDTO enrollmentDTO){
